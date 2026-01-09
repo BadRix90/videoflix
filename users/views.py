@@ -1,6 +1,6 @@
 """Views for user authentication endpoints."""
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -18,6 +18,7 @@ from .utils import (
 
 
 @api_view(['POST'])
+@authentication_classes([])
 @permission_classes([AllowAny])
 def register_view(request):
     """Register new user and send activation email."""
@@ -34,6 +35,7 @@ def register_view(request):
 
 
 @api_view(['GET'])
+@authentication_classes([])
 @permission_classes([AllowAny])
 def activate_view(request, uidb64, token):
     """Activate user account via email token."""
@@ -48,6 +50,7 @@ def activate_view(request, uidb64, token):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 @permission_classes([AllowAny])
 def login_view(request):
     """Authenticate user and set JWT cookies."""
@@ -69,6 +72,7 @@ def login_view(request):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 @permission_classes([AllowAny])
 def logout_view(request):
     """Logout user and invalidate refresh token."""
@@ -84,6 +88,7 @@ def logout_view(request):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 @permission_classes([AllowAny])
 def token_refresh_view(request):
     """Refresh access token using refresh token cookie."""
@@ -106,6 +111,7 @@ def token_refresh_view(request):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 @permission_classes([AllowAny])
 def password_reset_view(request):
     """Send password reset email."""
@@ -125,6 +131,7 @@ def password_reset_view(request):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 @permission_classes([AllowAny])
 def password_confirm_view(request, uidb64, token):
     """Confirm password reset with new password."""
