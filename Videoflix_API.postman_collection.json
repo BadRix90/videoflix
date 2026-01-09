@@ -1,0 +1,257 @@
+{
+  "info": {
+    "_postman_id": "videoflix-api-collection",
+    "name": "Videoflix API",
+    "description": "API Endpoints für Videoflix - Authentication und Video Streaming",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"confirmed_password\": \"{{password}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/register/",
+              "host": ["{{base_url}}"],
+              "path": ["register", ""]
+            },
+            "description": "Registriert einen neuen Benutzer. Nach erfolgreicher Registrierung wird eine Aktivierungs-E-Mail versendet."
+          },
+          "response": []
+        },
+        {
+          "name": "Activate Account",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/activate/{{uid}}/{{token}}/",
+              "host": ["{{base_url}}"],
+              "path": ["activate", "{{uid}}", "{{token}}", ""]
+            },
+            "description": "Aktiviert das Benutzerkonto mithilfe des per E-Mail gesendeten Tokens."
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    pm.test('Login successful', function() {",
+                  "        var jsonData = pm.response.json();",
+                  "        pm.expect(jsonData.detail).to.eql('Login successful');",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/login/",
+              "host": ["{{base_url}}"],
+              "path": ["login", ""]
+            },
+            "description": "Authentifiziert den Benutzer und setzt JWT-Tokens als HttpOnly-Cookies."
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/logout/",
+              "host": ["{{base_url}}"],
+              "path": ["logout", ""]
+            },
+            "description": "Meldet den Benutzer ab und invalidiert den Refresh-Token."
+          },
+          "response": []
+        },
+        {
+          "name": "Token Refresh",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/token/refresh/",
+              "host": ["{{base_url}}"],
+              "path": ["token", "refresh", ""]
+            },
+            "description": "Gibt ein neues Access-Token aus, wenn der alte abgelaufen ist."
+          },
+          "response": []
+        },
+        {
+          "name": "Password Reset Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/password_reset/",
+              "host": ["{{base_url}}"],
+              "path": ["password_reset", ""]
+            },
+            "description": "Sendet einen Link zum Zurücksetzen des Passworts an die E-Mail des Benutzers."
+          },
+          "response": []
+        },
+        {
+          "name": "Password Reset Confirm",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"new_password\": \"NewPassword123!\",\n  \"confirm_password\": \"NewPassword123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/password_confirm/{{uid}}/{{token}}/",
+              "host": ["{{base_url}}"],
+              "path": ["password_confirm", "{{uid}}", "{{token}}", ""]
+            },
+            "description": "Bestätigt die Passwortänderung mit dem Token aus der E-Mail."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Video",
+      "item": [
+        {
+          "name": "Get Video List",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    pm.test('Video list returned', function() {",
+                  "        var jsonData = pm.response.json();",
+                  "        pm.expect(jsonData).to.be.an('array');",
+                  "    });",
+                  "    ",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.length > 0) {",
+                  "        pm.environment.set('movie_id', jsonData[0].id);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/video/",
+              "host": ["{{base_url}}"],
+              "path": ["video", ""]
+            },
+            "description": "Gibt eine Liste aller verfügbaren Videos zurück. Erfordert JWT-Authentifizierung."
+          },
+          "response": []
+        },
+        {
+          "name": "Get HLS Manifest",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/video/{{movie_id}}/{{resolution}}/index.m3u8",
+              "host": ["{{base_url}}"],
+              "path": ["video", "{{movie_id}}", "{{resolution}}", "index.m3u8"]
+            },
+            "description": "Gibt die HLS-Master-Playlist für einen Film in gewählter Auflösung zurück (480p, 720p, 1080p)."
+          },
+          "response": []
+        },
+        {
+          "name": "Get HLS Segment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/video/{{movie_id}}/{{resolution}}/000.ts/",
+              "host": ["{{base_url}}"],
+              "path": ["video", "{{movie_id}}", "{{resolution}}", "000.ts", ""]
+            },
+            "description": "Gibt ein einzelnes HLS-Videosegment zurück."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ]
+}
