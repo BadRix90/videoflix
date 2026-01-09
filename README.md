@@ -105,16 +105,17 @@ videoflix/
 
 ## Technologies
 
-- **Django 6.0** - Web framework
-- **Django REST Framework** - REST API
+- **Python 3.14.0**
+- **Django 6.0.1** - Web framework
+- **Django REST Framework 3.16.1** - REST API
 - **PostgreSQL** - Database
-- **Redis** - Caching layer
-- **Django RQ** - Background task queue
+- **Redis 7.1.0** - Caching layer
+- **Django RQ 3.2.2** - Background task queue
 - **FFMPEG** - Video conversion to HLS
-- **JWT** - Authentication with HTTP-Only cookies
-- **Docker** - Containerization
-- **Gunicorn** - WSGI server
-- **Whitenoise** - Static file serving
+- **Simple JWT 5.5.1** - Authentication with HTTP-Only cookies
+- **Docker 29.0.1** - Containerization
+- **Gunicorn 23.0.0** - WSGI server
+- **Whitenoise 6.11.0** - Static file serving
 
 ---
 
