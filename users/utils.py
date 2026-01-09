@@ -14,16 +14,37 @@ def generate_token_data(user):
     return uid, token
 
 
+def build_activation_html(link):
+    """Build HTML content for activation email."""
+    return f'''<html><body>
+    <h2>Welcome to Videoflix!</h2>
+    <p>Click the button below to activate your account:</p>
+    <p><a href="{link}" style="background:#e50914;color:white;padding:10px 20px;text-decoration:none;border-radius:5px;">Activate Account</a></p>
+    <p>Or copy this link: {link}</p>
+    </body></html>'''
+
+
 def send_activation_email(user, uid, token):
     """Send account activation email to user."""
     link = f"{settings.FRONTEND_URL}/pages/auth/activate.html?uid={uid}&token={token}"
     send_mail(
         subject='Activate your Videoflix account',
-        message=f'Click to activate: {link}',
+        message=f'Activate your account: {link}',
         from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[user.email],
+        html_message=build_activation_html(link),
         fail_silently=False,
     )
+
+
+def build_reset_html(link):
+    """Build HTML content for password reset email."""
+    return f'''<html><body>
+    <h2>Reset your Videoflix password</h2>
+    <p>Click the button below to reset your password:</p>
+    <p><a href="{link}" style="background:#e50914;color:white;padding:10px 20px;text-decoration:none;border-radius:5px;">Reset Password</a></p>
+    <p>Or copy this link: {link}</p>
+    </body></html>'''
 
 
 def send_password_reset_email(user, uid, token):
@@ -31,9 +52,10 @@ def send_password_reset_email(user, uid, token):
     link = f"{settings.FRONTEND_URL}/pages/auth/confirm_password.html?uid={uid}&token={token}"
     send_mail(
         subject='Reset your Videoflix password',
-        message=f'Click to reset: {link}',
+        message=f'Reset your password: {link}',
         from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[user.email],
+        html_message=build_reset_html(link),
         fail_silently=False,
     )
 

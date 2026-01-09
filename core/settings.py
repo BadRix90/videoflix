@@ -153,7 +153,7 @@ if not EMAIL_HOST_USER or not EMAIL_HOST_PASSWORD:
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-FRONTEND_URL = 'http://localhost:5500'
+FRONTEND_URL = 'http://127.0.0.1:5500'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5500",
