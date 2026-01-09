@@ -11,8 +11,9 @@ from .utils import serve_manifest, serve_segment
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@cache_page(60 * 15)
 def video_list_view(request):
-    """Return list of all available videos."""
+    """Return cached list of all available videos."""
     videos = Video.objects.all()
     serializer = VideoSerializer(videos, many=True, context={'request': request})
     return Response(serializer.data)
