@@ -3,7 +3,6 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.views.decorators.cache import cache_page
-from django.utils.decorators import method_decorator
 from .models import Video
 from .serializers import VideoSerializer
 from .utils import serve_manifest, serve_segment
