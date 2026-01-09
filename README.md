@@ -130,10 +130,29 @@ Environment variables in `.env`:
 | `ALLOWED_HOSTS` | Allowed hostnames | `localhost` |
 | `DB_NAME` | Database name | `videoflix_db` |
 | `DB_USER` | Database user | `videoflix_user` |
-| `DB_PASSWORD` | Database password | - |
-| `EMAIL_HOST` | SMTP server | - |
+| `DB_PASSWORD` | Database password | `videoflix_password` |
+| `EMAIL_HOST` | SMTP server | `smtp.gmail.com` |
 | `EMAIL_HOST_USER` | SMTP username | - |
 | `EMAIL_HOST_PASSWORD` | SMTP password | - |
+
+### Email Configuration
+
+**Development Mode (default):**
+If `EMAIL_HOST_USER` is empty, emails are printed to Docker console logs.
+After registration, find the activation link in the logs:
+```bash
+docker-compose logs -f web
+```
+
+**Production Mode:**
+Configure real SMTP credentials in `.env`:
+```
+EMAIL_HOST=smtp.gmail.com
+EMAIL_HOST_USER=your.email@gmail.com
+EMAIL_HOST_PASSWORD=your-app-password
+```
+
+For Gmail, use an [App Password](https://support.google.com/accounts/answer/185833).
 
 ---
 
