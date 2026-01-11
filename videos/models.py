@@ -20,7 +20,7 @@ class Video(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
     video_file = models.FileField(upload_to='videos/')
-    thumbnail = models.ImageField(upload_to='thumbnails/', blank=True, null=True)
+    thumbnail = models.ImageField(upload_to='thumbnails/')
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
 
     class Meta:
