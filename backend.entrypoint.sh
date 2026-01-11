@@ -1,11 +1,11 @@
-#!/bin/sh
+﻿#!/bin/sh
 
 set -e
 
 echo "Warte auf PostgreSQL auf $DB_HOST:$DB_PORT..."
 
-# -q für "quiet" (keine Ausgabe außer Fehlern)
-# Die Schleife läuft, solange pg_isready *nicht* erfolgreich ist (Exit-Code != 0)
+# -q fÃ¼r "quiet" (keine Ausgabe auÃŸer Fehlern)
+# Die Schleife lÃ¤uft, solange pg_isready *nicht* erfolgreich ist (Exit-Code != 0)
 while ! pg_isready -h "$DB_HOST" -p "$DB_PORT" -q; do
   echo "PostgreSQL ist nicht erreichbar - schlafe 1 Sekunde"
   sleep 1
@@ -31,7 +31,7 @@ password = os.environ.get('DJANGO_SUPERUSER_PASSWORD', 'adminpassword')
 
 if not User.objects.filter(username=username).exists():
     print(f"Creating superuser '{username}'...")
-    # Korrekter Aufruf: username hier übergeben
+    # Korrekter Aufruf: username hier Ã¼bergeben
     User.objects.create_superuser(username=username, email=email, password=password)
     print(f"Superuser '{username}' created.")
 else:
