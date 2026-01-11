@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=100)),
                 ('description', models.TextField(max_length=500)),
                 ('video_file', models.FileField(upload_to='videos/')),
-                ('thumbnail', models.ImageField(blank=True, null=True, upload_to='thumbnails/')),
+                ('thumbnail', models.ImageField(upload_to='thumbnails/')),
                 ('category', models.CharField(choices=[('drama', 'Drama'), ('romance', 'Romance'), ('comedy', 'Comedy'), ('action', 'Action'), ('documentary', 'Documentary')], max_length=20)),
             ],
             options={
