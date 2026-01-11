@@ -7,6 +7,7 @@ LABEL description="Python 3.14.0a7 Alpine 3.21"
 WORKDIR /app
 
 COPY . .
+RUN sed -i 's/\r$//' backend.entrypoint.sh
 
 RUN apk update && \
     apk add --no-cache --upgrade bash && \
@@ -20,3 +21,4 @@ RUN apk update && \
 EXPOSE 8000
 
 ENTRYPOINT [ "./backend.entrypoint.sh" ]
+
